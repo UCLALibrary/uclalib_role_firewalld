@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<zone>
+  <short>Public</short>
+  <description>For use in public areas. You do not trust the other computers on networks to not harm your computer. Only selected incoming connections are accepted.</description>
+{% for ruledef in rule_definitions %}
+  <rule family="{{ ruledef.family }}">
+{% if ruledef.invert is defined %}
+    <source address="{{ ruledef.src_addr}}" invert="{{ ruledef.invert }}"/>
+{% else %}
+    <source address="{{ ruledef.src_addr}}"/>
+{% endif %}
+{% if ruledef.srv_name is defined %}
+    <service name="{{ ruledef.srv_name }}"/>
+{% endif %}
+{% if ruledef.port is defined %}
+    <port port="{{ ruledef.port }}" protocol="{{ ruledef.protocol }}"/>
+{% endif %}
+{%if ruledef.icmp_block is defined %}
+    <icmp-block name="{{ ruledef.icmp_block }}"/>
+{% endif %}
+{% if ruledef.action is defined %}
+{% if ruledef.action == "accept" %}
+    <accept/>
+{% elif ruledef.action == "drop" %}
+    <drop>
+{% elif ruledef.action == "reject" %}
+    <reject/>
+{% else %}
+    <!-- <no-action-defined/> -->
+{% endif %}
+{% endif %}
+  </rule>
+{% endfor %}
+</zone>

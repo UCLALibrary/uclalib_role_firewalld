@@ -1,3 +1,38 @@
 ---
-- debug:
-    msg: "This test passed"
+- name: Ensure firewalld is installed
+  yum: name=firewalld state=present
+
+- name: Ensure firewalld is enabled and started
+  service: name=firewalld enabled=yes state=started
+
+- name: Determine firewalld default zone
+  command: "{{ firewallcmd_path }} --get-default-zone"
+  register: zone_name
+  changed_when: false
+
+- name: Set firewalld default zone
+  command: "{{ firewallcmd_path }} --set-default-zone={{ default_zone }}"
+  when: zone_name.stdout != "{{ default_zone }}"
+
+- name: Put in place service files
+  template:
+    src: "service.j2"
+    dest: "{{ firewalld_config_path }}/services/{{ item.key }}.xml"
+    owner: "root"
+    group: "root"
+    mode: 0644
+  with_dict: "{{ service_definitions|default({}) }}"
+  notify:
+    - reload firewalld
+  when: service_definitions is defined
+
+- name: Put in place public zone configuration file
+  template:
+    src: "public_zone.j2"
+    dest: "{{ firewalld_config_path }}/zones/public.xml"
+    owner: "root"
+    group: "root"
+    mode: 0644
+  notify:
+    - reload firewalld
+  when: rule_definitions is defined
