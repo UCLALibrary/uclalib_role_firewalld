@@ -11,7 +11,7 @@ services:
 before_install:
   - 'docker pull geerlingguy/docker-${distro}-ansible:latest'
 
-# Assume we've named our GitHub repo the same as our role
+# Assume we've named our GitHub repo the same as our role 
 script:
   - role_name=${TRAVIS_BUILD_DIR##*/}
   - container_id=$(mktemp)
