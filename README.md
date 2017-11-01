@@ -32,10 +32,11 @@ This role is written for a RHEL system (specifically RHEL7 and greater).
   - `family` - defines the ip rule family to use (either `ipv4` or `ipv6`)
   - `src_addr` - defines the source IP address and mask (e.g. `172.16.0.0/24`)
   - `srv_name` - OPTIONAL - defines the name of the service to use - this can be a built-in or custom service
-  - `port` - OPTIONAL - if no srv_name is define, provides the port number for the rule - this can be either a single port (`22`) or range of ports (`1001-1005`)
-  - `protocol` - OPTIONAL - if a port is specified,
+  - `port` - OPTIONAL - if no srv_name is defined, provides the port number for the rule - this can be either a single port (`22`) or range of ports (`1001-1005`)
+  - `protocol` - OPTIONAL - if a port is specified, defines the protocol as either `tcp` or `udp`
   - `invert` - OPTIONAL - defines if matching of the source address should be inverted (e.g. if `True` then all but the source address will match)
   - `icmp_block` - OPTIONAL - defines an ICMP request type that should be rejected (e.g. `echo-request`)
+  - `icmp_type` - OPTIONAL - defines an ICMP request type (e.g. `echo-request`) that is associated with a rule `action`
   - `action` - OPTIONAL - defines the action that should result from a matching rule (either `accept`, `reject`, `drop`)
 
 ## Example Playbook
@@ -84,5 +85,9 @@ This role is written for a RHEL system (specifically RHEL7 and greater).
         src_addr: 164.67.153.224/32
         invert: True
         icmp_block: echo-request
-
+      - family: ipv4
+        src_addr: 164.67.153.224/32
+        invert: True
+        icmp_type: echo-request
+        action: drop
 ```

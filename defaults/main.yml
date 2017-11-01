@@ -31,4 +31,5 @@ default_zone: public
 #    - family: ipv4
 #      src_addr: 164.67.153.224/32
 #      invert: True
-#      icmp_block: echo-request
+#      icmp_type: echo-request
+#      action: drop

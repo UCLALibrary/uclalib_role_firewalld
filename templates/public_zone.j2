@@ -18,6 +18,9 @@
 {%if ruledef.icmp_block is defined %}
     <icmp-block name="{{ ruledef.icmp_block }}"/>
 {% endif %}
+{%if ruledef.icmp_type is defined %}
+    <icmp-type name="{{ ruledef.icmp_type }}"/>
+{% endif %}
 {% if ruledef.action is defined %}
 {% if ruledef.action == "accept" %}
     <accept/>
