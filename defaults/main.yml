@@ -4,8 +4,6 @@ firewallcmd_path: /bin/firewall-cmd
 
 firewalld_config_path: /etc/firewalld
 
-default_zone: public
-
 # Example service definition declaration
 #service_definitions:
 #  ssh:
