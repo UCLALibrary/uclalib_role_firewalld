@@ -5,15 +5,6 @@
 - name: Ensure firewalld is enabled and started
   service: name=firewalld enabled=yes state=started
 
-- name: Determine firewalld default zone
-  command: "{{ firewallcmd_path }} --get-default-zone"
-  register: zone_name
-  changed_when: false
-
-- name: Set firewalld default zone
-  command: "{{ firewallcmd_path }} --set-default-zone={{ default_zone }}"
-  when: zone_name.stdout != "{{ default_zone }}"
-
 - name: Put in place service files
   template:
     src: "service.j2"

@@ -20,8 +20,6 @@ This role is written for a RHEL system (specifically RHEL7 and greater).
 
 - `firewalld_config_path` - defines the path to the firewalld config directory (default: `/etc/firewalld`)
 
-- `default_zone` - defines the default zone for firewalld configuration (default: `public`)
-
 - `service_definitions` - variable that instantiates the service definition list
   - key - the name of the service (e.g. `ssh`)
     - desc - a description of the service being defined
