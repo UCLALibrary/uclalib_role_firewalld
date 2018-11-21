@@ -1,4 +1,5 @@
 ---
 
 - name: reload firewalld
-  command: "{{ firewallcmd_path }} --reload"
+  command: >
+    "{{ firewallcmd_path }} --reload"
