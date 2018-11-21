@@ -24,6 +24,11 @@
   tags:
     - service-definitions
 
+- import_tasks: ipset_setup.yml
+  when: ipset_definitions is defined
+  tags:
+    - ipset-definitions
+
 - name: Put in place public zone configuration file
   template:
     src: "public_zone.j2"

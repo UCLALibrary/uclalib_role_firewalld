@@ -19,10 +19,15 @@
   </rule>
 {% for ruledef in rule_definitions %}
   <rule family="{{ ruledef.family }}">
+{% if ruledef.src_addr is defined %}
 {% if ruledef.invert is defined %}
     <source address="{{ ruledef.src_addr}}" invert="{{ ruledef.invert }}"/>
 {% else %}
     <source address="{{ ruledef.src_addr}}"/>
+{% endif %}
+{% endif %}
+{% if ruledef.src_ipset is defined %}
+    <source ipset="{{ ruledef.src_ipset }}"/>
 {% endif %}
 {% if ruledef.srv_name is defined %}
     <service name="{{ ruledef.srv_name }}"/>

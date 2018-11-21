@@ -1,12 +1,16 @@
 ---
 
+# Defines the path to the firewall-cmd command
 firewallcmd_path: /bin/firewall-cmd
 
+# Defines the path to the firewalld configuration directory
 firewalld_config_path: /etc/firewalld
 
-ssh_src_addr: "164.67.40.0/24"
+# Defines the source IP address where SSH connections can originate
+ssh_src_addr: ""
 
-monitoring_src_addr: "164.67.40.224"
+# Defines the source IP address where monitoring/ping checks can originate
+monitoring_src_addr: ""
 
 # Example service definition declaration
 #service_definitions:
@@ -14,6 +18,24 @@ monitoring_src_addr: "164.67.40.224"
 #    desc: "Secure Shell (SSH) is a protocol for logging into and executing commands on remote machines."
 #    proto: tcp
 #    port: 22
+
+# Example ipset definition declarations
+#ipset_definitions:
+#  uclavpn:
+#    type: "hash:net"
+#    ipaddrs: |
+#      1.1.1.1
+#      2.2.2.2
+#      3.3.3.3
+#      4.4.4.4
+#  uclawifi:
+#    type: "hash:net"
+#    ipaddrs: |
+#      10.10.10.10
+#      11.11.11.11
+#      12.12.12.12
+#      13.13.13.13
+#      14.14.14.14
 
 # Example rules definition declaration
 #  rule_definitions:
@@ -35,3 +57,7 @@ monitoring_src_addr: "164.67.40.224"
 #      invert: true
 #      icmp_type: echo-request
 #      action: drop
+#    - family: ipv4
+#      src_ipset: uclavpn
+#      srv_name: https
+#      action: accept
