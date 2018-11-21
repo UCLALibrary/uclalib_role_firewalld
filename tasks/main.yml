@@ -21,6 +21,8 @@
   notify:
     - reload firewalld
   when: service_definitions is defined
+  tags:
+    - service-definitions
 
 - name: Put in place public zone configuration file
   template:
@@ -32,3 +34,5 @@
   notify:
     - reload firewalld
   when: rule_definitions is defined
+  tags:
+    - rule-definitions
