@@ -1,0 +1,22 @@
+---
+
+- name: Create ipset temporary files
+  copy:
+    dest: "{{ firewalld_config_path}}/{{ item.key }}_ipset"
+    content: "{{ item.value.ipaddrs }}"
+    owner: "root"
+    group: "root"
+    mode: "0640"
+  with_dict: "{{ ipset_definitions }}"
+
+- name: Create ipset configurations
+  shell: >
+    firewall-cmd --permanent --new-ipset={{ item.key }} --type={{ item.value.type }} ;
+    firewall-cmd --permanent --ipset={{ item.key }} --add-entries-from-file={{ firewalld_config_path}}/{{ item.key }}_ipset
+  with_dict: "{{ ipset_definitions }}"
+
+- name: Remove ipset temporary files
+  file:
+    path: "{{ firewalld_config_path}}/{{ item.key }}_ipset"
+    state: "absent"
+  with_dict: "{{ ipset_definitions }}"
