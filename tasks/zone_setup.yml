@@ -1,0 +1,11 @@
+---
+
+- name: Put in place public zone configuration file
+  template:
+    src: "public_zone.j2"
+    dest: "{{ firewalld_config_path }}/zones/public.xml"
+    owner: "root"
+    group: "root"
+    mode: 0644
+  notify:
+    - reload firewalld
