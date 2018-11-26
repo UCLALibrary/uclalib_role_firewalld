@@ -109,4 +109,8 @@ This role is written for a RHEL system (specifically RHEL7 and greater).
         invert: True
         icmp_type: echo-request
         action: drop
+      - family: ipv4
+        src_ipset: uclavpn
+        srv_name: https
+        action: accept
 ```
