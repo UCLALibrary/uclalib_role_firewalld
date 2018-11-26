@@ -15,6 +15,5 @@
     - firewalld-ipset-definitions
 
 - import_tasks: zone_setup.yml
-  when: rule_definitions is defined
   tags:
     - firewalld-zone-definitions
