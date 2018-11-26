@@ -1,0 +1,12 @@
+---
+
+- name: Put in place service files
+  template:
+    src: "service.j2"
+    dest: "{{ firewalld_config_path }}/services/{{ item.key }}.xml"
+    owner: "root"
+    group: "root"
+    mode: 0644
+  with_dict: "{{ service_definitions|default({}) }}"
+  notify:
+    - reload firewalld

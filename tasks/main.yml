@@ -1,43 +1,20 @@
 ---
-- name: Ensure firewalld is installed
-  yum:
-    name: "firewalld"
-    state: "present"
 
-- name: Ensure firewalld is enabled and started
-  service:
-    name: "firewalld"
-    enabled: "yes"
-    state: "started"
+- import_tasks: install_enable.yml
+  tags:
+    - firewalld-install-enable
 
-- name: Put in place service files
-  template:
-    src: "service.j2"
-    dest: "{{ firewalld_config_path }}/services/{{ item.key }}.xml"
-    owner: "root"
-    group: "root"
-    mode: 0644
-  with_dict: "{{ service_definitions|default({}) }}"
-  notify:
-    - reload firewalld
+- import_tasks: service_setup.yml
   when: service_definitions is defined
   tags:
-    - service-definitions
+    - firewalld-service-definitions
 
 - import_tasks: ipset_setup.yml
   when: ipset_definitions is defined
   tags:
-    - ipset-definitions
+    - firewalld-ipset-definitions
 
-- name: Put in place public zone configuration file
-  template:
-    src: "public_zone.j2"
-    dest: "{{ firewalld_config_path }}/zones/public.xml"
-    owner: "root"
-    group: "root"
-    mode: 0644
-  notify:
-    - reload firewalld
+- import_tasks: zone_setup.yml
   when: rule_definitions is defined
   tags:
-    - rule-definitions
+    - firewalld-zone-definitions
