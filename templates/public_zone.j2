@@ -17,6 +17,7 @@
     <icmp-type name="echo-request"/>
     <drop/>
   </rule>
+{% if rule_definitions is defined %}
 {% for ruledef in rule_definitions %}
   <rule family="{{ ruledef.family }}">
 {% if ruledef.src_addr is defined %}
@@ -54,4 +55,5 @@
 {% endif %}
   </rule>
 {% endfor %}
+{% endif %}
 </zone>
