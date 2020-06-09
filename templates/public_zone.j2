@@ -4,17 +4,22 @@
   <description>For use in public areas. You do not trust the other computers on networks to not harm your computer. Only selected incoming connections are accepted.</description>
 {% if ansible_domain == "library.ucla.edu" %}
   <rule family="ipv4">
-    <source address="{{ ssh_src_addr }}"/>
+    <source address="{{ ssh_src_addr_vlan94 }}"/>
+    <service name="ssh"/>
+    <accept/>
+  </rule>
+  <rule family="ipv4">
+    <source address="{{ ssh_src_addr_vlan548 }}"/>
     <service name="ssh"/>
     <accept/>
   </rule>
   <rule family="ipv4">
     <source address="{{ monitoring_src_addr }}"/>
-    <service name="nrpe"/>
+    <service name="zabbix_agent"/>
     <accept/>
   </rule>
   <rule family="ipv4">
-    <source address="{{ monitoring_src_addr }}" invert="true" />
+    <source address="{{ ssh_src_addr_vlan94 }}" invert="true" />
     <icmp-type name="echo-request"/>
     <drop/>
   </rule>
