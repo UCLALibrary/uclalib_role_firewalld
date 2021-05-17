@@ -19,6 +19,10 @@
     <accept/>
   </rule>
   <rule family="ipv4">
+    <source address="{{ itsec_scanner_addr }}"/>
+    <accept/>
+  </rule>
+  <rule family="ipv4">
     <source address="{{ ssh_src_addr_vlan94 }}" invert="true" />
     <icmp-type name="echo-request"/>
     <drop/>
