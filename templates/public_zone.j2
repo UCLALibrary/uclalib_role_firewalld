@@ -26,6 +26,10 @@
     <source address="{{ ssh_src_addr_vlan94 }}" invert="true" />
     <icmp-type name="echo-request"/>
     <drop/>
+  <rule family="ipv4">
+    <source address="{{ ssh_src_addr_vlan548 }}" invert="true" />
+    <icmp-type name="echo-request"/>
+    <drop/>
   </rule>
 {% endif %}
 {% if rule_definitions is defined %}
