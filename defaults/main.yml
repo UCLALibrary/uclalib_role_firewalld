@@ -1,5 +1,8 @@
 ---
 
+# Prevent accidentally running this role
+firewalld_enabled: false
+
 # Defines the path to the firewall-cmd command
 firewallcmd_path: /bin/firewall-cmd
 

@@ -1,19 +1,32 @@
 ---
 
-- import_tasks: install_enable.yml
-  tags:
-    - firewalld-install-enable
+- block:
 
-- import_tasks: service_setup.yml
-  when: service_definitions is defined
-  tags:
-    - firewalld-service-definitions
+    - name: Check firewalld enabled status
+      assert: 
+        that: firewalld_enabled | bool
+        success_msg: 'Firewall configuration enabled'
+        fail_msg: 'FIREWALL CONFIGURATION DISABLED'
 
-- import_tasks: ipset_setup.yml
-  when: ipset_definitions is defined
-  tags:
-    - firewalld-ipset-definitions
+    - include_tasks: install_enable.yml
+      tags:
+      - firewalld-install-enable
 
-- import_tasks: zone_setup.yml
-  tags:
-    - firewalld-zone-definitions
+    - include_tasks: service_setup.yml
+      when: service_definitions is defined
+      tags:
+        - firewalld-service-definitions
+
+    - include_tasks: ipset_setup.yml
+      when: ipset_definitions is defined
+      tags:
+        - firewalld-ipset-definitions
+
+    - include_tasks: zone_setup.yml
+      tags:
+        - firewalld-zone-definitions
+
+  rescue:
+    - name: How to enable firewalld
+      debug:
+        msg: "Please set 'firewalld_enabled' to 'true' to enable this role"
